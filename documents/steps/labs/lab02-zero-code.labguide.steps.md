@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, zero-code, python, semantic-conventions]
-duration: "45 minutos"
 level: "beginner"
 objectives:
   - "Instrumentar una app Flask con opentelemetry-bootstrap y opentelemetry-instrument."

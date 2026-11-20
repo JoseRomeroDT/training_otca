@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, kubernetes, operator, kind, auto-instrumentacion]
-duration: "60 minutos"
 level: "advanced"
 objectives:
   - "Instalar el OpenTelemetry Operator (con cert-manager) en un clúster kind."

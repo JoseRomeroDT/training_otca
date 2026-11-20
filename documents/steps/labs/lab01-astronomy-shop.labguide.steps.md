@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, demo, astronomy-shop, senales]
-duration: "60 minutos"
 level: "beginner"
 objectives:
   - "Desplegar la OpenTelemetry Demo (Astronomy Shop) con Docker Compose."

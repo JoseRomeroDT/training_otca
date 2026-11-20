@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, codespaces, entorno]
-duration: "20 minutos"
 level: "beginner"
 objectives:
   - "Crear un Codespace a partir del repositorio del curso."

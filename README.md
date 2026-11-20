@@ -35,22 +35,22 @@ El progreso (casillas, respuestas y mejores resultados) se guarda en el `localSt
 
 Fuentes: [Linux Foundation](https://training.linuxfoundation.org/certification/opentelemetry-certified-associate-otca/), [CNCF](https://www.cncf.io/training/certification/otca/), [currículo (PDF)](https://github.com/cncf/curriculum/blob/main/OTCA_Curriculum.pdf), [FAQ](https://docs.linuxfoundation.org/tc-docs/certification/faq-mc) e [instrucciones](https://docs.linuxfoundation.org/tc-docs/certification/important-instructions-mc) de exámenes de opción múltiple.
 
-## Sílabo (25 horas)
+## Sílabo
 
-| # | Horas | Dominio | Tema | Laboratorio |
-|---|---|---|---|---|
-| 1 | 2,5 | 1 | Introducción a la observabilidad | Astronomy Shop (demo oficial 3.1.0) |
-| 2 | 2,5 | 1 | Instrumentación y convenciones semánticas | Zero-code en Python |
-| 3 | 2 | 2 | API vs SDK y modelo de datos | Primer span y métrica con el SDK |
-| 4 | 2 | 2 | Trazas: spans, processors y sampling | Trazado distribuido de 2 servicios |
-| 5 | 2 | 2 | Métricas: instrumentos y agregación | Métricas de negocio por OTLP |
-| 6 | 2 | 2 | Logs, contexto y propagación | Logs correlacionados y propagación W3C |
-| 7 | 2 | 2 | Configuración, OTLP y agentes zero-code | Configuración solo con `OTEL_*` |
-| 8 | 2 | 3 | Collector: componentes y pipelines | Tu propio Collector |
-| 9 | 2 | 3 | Connectors, OTTL y despliegue | OTTL + agent → gateway |
-| 10 | 2 | 3 | Operator, Kubernetes y escalamiento | Operator en kind |
-| 11 | 2 | 4 | Mantenimiento y depuración | Depurar pipelines rotos |
-| 12 | 2 | Todos | Repaso y simulacro | Quizzes y simulacro |
+| # | Dominio | Tema | Laboratorio |
+|---|---|---|---|
+| 1 | 1 | Introducción a la observabilidad | Astronomy Shop (demo oficial 3.1.0) |
+| 2 | 1 | Instrumentación y convenciones semánticas | Zero-code en Python |
+| 3 | 2 | API vs SDK y modelo de datos | Primer span y métrica con el SDK |
+| 4 | 2 | Trazas: spans, processors y sampling | Trazado distribuido de 2 servicios |
+| 5 | 2 | Métricas: instrumentos y agregación | Métricas de negocio por OTLP |
+| 6 | 2 | Logs, contexto y propagación | Logs correlacionados y propagación W3C |
+| 7 | 2 | Configuración, OTLP y agentes zero-code | Configuración solo con `OTEL_*` |
+| 8 | 3 | Collector: componentes y pipelines | Tu propio Collector |
+| 9 | 3 | Connectors, OTTL y despliegue | OTTL + agent → gateway |
+| 10 | 3 | Operator, Kubernetes y escalamiento | Operator en kind |
+| 11 | 4 | Mantenimiento y depuración | Depurar pipelines rotos |
+| 12 | Todos | Repaso y simulacro | Quizzes y simulacro |
 
 ## Entorno de laboratorio
 

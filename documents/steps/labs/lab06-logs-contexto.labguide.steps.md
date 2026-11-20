@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, logs, contexto, propagacion, baggage]
-duration: "50 minutos"
 level: "intermediate"
 objectives:
   - "Enviar logs del módulo logging de Python por OTLP con el logs bridge."

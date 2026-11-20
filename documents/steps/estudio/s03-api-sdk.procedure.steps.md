@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-2, api, sdk, data-model]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Explicar la separación API/SDK y por qué la API es no-op sin SDK."

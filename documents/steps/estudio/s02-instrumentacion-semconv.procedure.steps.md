@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-1, instrumentacion, zero-code, semantic-conventions]
-duration: "2,5 horas"
 level: "beginner"
 objectives:
   - "Aplicar convenciones semánticas a la telemetría (atributos de span y de recurso)."

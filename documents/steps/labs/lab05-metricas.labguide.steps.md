@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, metricas, prometheus, views, temporalidad]
-duration: "50 minutos"
 level: "intermediate"
 objectives:
   - "Configurar MeterProvider con PeriodicExportingMetricReader y OTLPMetricExporter."

@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, ottl, connectors, gateway, despliegue]
-duration: "60 minutos"
 level: "advanced"
 objectives:
   - "Desplegar el patrón agent → gateway con dos Collectors."

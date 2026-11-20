@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-3, kubernetes, operator, escalamiento]
-duration: "2 horas"
 level: "advanced"
 objectives:
   - "Instalar el OpenTelemetry Operator y crear un Collector gestionado."

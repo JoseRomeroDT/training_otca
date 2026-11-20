@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, configuracion, otlp, zero-code]
-duration: "40 minutos"
 level: "intermediate"
 objectives:
   - "Configurar Resource, exporters, sampler y propagadores con variables OTEL_*."

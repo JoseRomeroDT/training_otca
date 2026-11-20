@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-3, collector, pipelines, configuracion]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Describir receivers, processors, exporters, connectors y extensions."

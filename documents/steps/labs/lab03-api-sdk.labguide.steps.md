@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, api, sdk, python]
-duration: "40 minutos"
 level: "intermediate"
 objectives:
   - "Comprobar que la API sin SDK es no-op."
