@@ -1,0 +1,77 @@
+# Lab 9 · Collector en modo GATEWAY (contenedor otel-gateway).
+# Recibe del agent, transforma con OTTL, filtra, deriva métricas RED de las
+# trazas con un connector y exporta a Jaeger y Prometheus.
+#
+# Referencias:
+#   https://opentelemetry.io/docs/collector/transforming-telemetry/
+#   https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/transformprocessor
+#   https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/filterprocessor
+#   https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/connector/spanmetricsconnector
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_percentage: 75
+    spike_limit_percentage: 15
+
+  # OTTL: enriquecer y enmascarar datos personales (el nombre del jugador).
+  transform/enriquecer:
+    error_mode: ignore
+    trace_statements:
+      - set(span.attributes["lab.sesion"], "09")
+      - set(span.attributes["player.name"], SHA256(span.attributes["player.name"])) where span.attributes["player.name"] != nil
+      - replace_pattern(span.attributes["http.target"], "player=[^&]*", "player=***")
+      - replace_pattern(span.attributes["http.url"], "player=[^&]*", "player=***")
+    log_statements:
+      - set(log.attributes["lab.procesado_por"], "gateway")
+
+  # Filtrar: descarta los logs por debajo de WARN (las condiciones son OR; lo que cumple se descarta).
+  filter/solo-warn:
+    error_mode: ignore
+    log_conditions:
+      - log.severity_number < SEVERITY_NUMBER_WARN
+
+connectors:
+  # Traces → metrics: llamadas, errores y duración (R.E.D.) por servicio y span.
+  span_metrics:
+    metrics_flush_interval: 15s
+
+exporters:
+  otlp_grpc/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+    sending_queue:
+      batch: {}
+  prometheus:
+    endpoint: 0.0.0.0:8889
+  debug/logs:
+    verbosity: detailed
+
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+service:
+  extensions: [health_check, zpages]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, transform/enriquecer]
+      exporters: [otlp_grpc/jaeger, span_metrics]
+    metrics:
+      receivers: [otlp, span_metrics]
+      processors: [memory_limiter]
+      exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, filter/solo-warn, transform/enriquecer]
+      exporters: [debug/logs]

@@ -1,0 +1,25 @@
+# Lab 11 · Escenario A — solución.
+# El pipeline referenciaba "otlp_grpc/jager" (errata), un exporter que no existe en
+# la sección exporters. validate lo informa como un componente no configurado.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  debug:
+    verbosity: basic
+  otlp_grpc/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp_grpc/jaeger, debug]

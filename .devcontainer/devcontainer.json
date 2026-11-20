@@ -1,0 +1,38 @@
+{
+  "name": "Entrenamiento OTCA",
+  "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "version": "latest",
+      "helm": "latest",
+      "minikube": "none"
+    }
+  },
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "8gb"
+  },
+  "forwardPorts": [16686, 9090, 8080, 55679, 13133, 8888],
+  "portsAttributes": {
+    "16686": { "label": "Jaeger UI (trazas)", "onAutoForward": "notify" },
+    "9090": { "label": "Prometheus (métricas)", "onAutoForward": "notify" },
+    "8080": { "label": "App de laboratorio / Astronomy Shop", "onAutoForward": "notify" },
+    "55679": { "label": "Collector zPages", "onAutoForward": "silent" },
+    "13133": { "label": "Collector health_check", "onAutoForward": "silent" },
+    "8888": { "label": "Collector métricas internas", "onAutoForward": "silent" },
+    "4317": { "label": "OTLP gRPC", "onAutoForward": "ignore" },
+    "4318": { "label": "OTLP HTTP", "onAutoForward": "ignore" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "redhat.vscode-yaml"],
+      "settings": {
+        "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+        "python.terminal.activateEnvironment": true
+      }
+    }
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "bash .devcontainer/post-create.sh"
+}

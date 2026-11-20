@@ -1,0 +1,24 @@
+# Prometheus del entorno de laboratorio: lee (scrape) las métricas que
+# el Collector expone con el exporter "prometheus" y sus métricas internas.
+global:
+  scrape_interval: 10s
+
+scrape_configs:
+  # Métricas de las apps, expuestas por el exporter "prometheus" del Collector.
+  # honor_labels conserva las etiquetas job/instance que el exporter deriva de
+  # service.name / service.instance.id.
+  - job_name: otel-collector-apps
+    honor_labels: true
+    static_configs:
+      - targets: ["otel-collector:8889"]
+
+  # Métricas internas del propio Collector (otelcol_*).
+  - job_name: otel-collector-interno
+    static_configs:
+      - targets: ["otel-collector:8888"]
+
+  # Solo existe en el Lab 9 (perfil "gateway"); fuera de ese lab aparece como "down".
+  - job_name: otel-gateway-apps
+    honor_labels: true
+    static_configs:
+      - targets: ["otel-gateway:8889"]

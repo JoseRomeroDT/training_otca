@@ -1,0 +1,99 @@
+# Valida el sitio y los laboratorios en cada pull request.
+#  - documentos: formato de DocPages y enlaces internos
+#  - collector: otelcol-contrib validate sobre todas las configuraciones
+#  - python: dependencias fijadas, compilación y scripts sin servicios externos
+#  - laboratorios-e2e: entorno real (Collector + Jaeger + Prometheus) con los labs 0, 4, 5, 8, 9 y 11
+#  - laboratorio-10: kind + cert-manager + OpenTelemetry Operator + auto-instrumentación
+name: Validar curso
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  documentos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Validar documentos
+        run: node scripts/validate-documents.mjs
+      - name: Validar enlaces internos
+        run: node scripts/check-links.mjs
+
+  collector:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: otel/opentelemetry-collector-contrib:0.165.0
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validar configuraciones del Collector
+        run: |
+          docker pull --quiet "$IMAGE"
+          for f in labs/lab-env/otelcol-config.yaml labs/lab08-collector/*.yaml labs/lab09-ottl-gateway/*.yaml \
+                   labs/lab11-depuracion/escenario-a-solucion.yaml labs/lab11-depuracion/escenario-b.yaml \
+                   labs/lab11-depuracion/escenario-b-solucion.yaml; do
+            echo "::group::$f"
+            docker run --rm -v "$PWD/$f:/tmp/config.yaml:ro" "$IMAGE" validate --config=/tmp/config.yaml
+            echo "::endgroup::"
+          done
+      - name: El escenario A del Lab 11 debe fallar a propósito
+        run: |
+          if docker run --rm -v "$PWD/labs/lab11-depuracion/escenario-a.yaml:/tmp/config.yaml:ro" "$IMAGE" validate --config=/tmp/config.yaml; then
+            echo "::error file=labs/lab11-depuracion/escenario-a.yaml::validate debería rechazar este archivo"
+            exit 1
+          fi
+      - name: Sintaxis del compose y de los scripts
+        run: |
+          docker compose -f labs/lab-env/compose.yaml --profile gateway config --quiet
+          for s in labs/lab-env/*.sh labs/lab10-kubernetes/*.sh .devcontainer/*.sh .github/scripts/*.sh; do bash -n "$s"; done
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install -r labs/requirements.txt
+      - run: python -m compileall -q labs
+      - name: Lab 3 · API sin SDK
+        run: python labs/lab03-api-sdk/noop_api.py | grep -q "NonRecordingSpan"
+      - name: Lab 5 · temporalidad delta
+        run: python labs/lab05-metricas/temporalidad.py delta | grep -q "temporalidad=DELTA"
+
+  laboratorios-e2e:
+    needs: [collector, python]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: pip install -r labs/requirements.txt
+      - run: bash .github/scripts/e2e-labs.sh
+
+  laboratorio-10:
+    needs: [collector]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Instalar kind v0.33.0 (con verificación SHA256)
+        run: |
+          cd "$RUNNER_TEMP"
+          curl -fsSLO https://github.com/kubernetes-sigs/kind/releases/download/v0.33.0/kind-linux-amd64
+          curl -fsSLO https://github.com/kubernetes-sigs/kind/releases/download/v0.33.0/kind-linux-amd64.sha256sum
+          sha256sum -c kind-linux-amd64.sha256sum
+          sudo install -m 0755 kind-linux-amd64 /usr/local/bin/kind
+      - run: bash .github/scripts/e2e-lab10.sh

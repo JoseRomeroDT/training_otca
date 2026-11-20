@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+  Desarrollado por Jose Eduardo Romero Jimenez
+  https://github.com/Edunzz
+  Logotipo de DocPages: una hoja de documento en línea, plana y sobria.
+  -->
+  <rect x="0.5" y="0.5" width="63" height="63" rx="12" fill="#1f2a44" stroke="#ffffff" stroke-opacity="0.14"/>
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 12h13l11 11v25a4 4 0 0 1-4 4H22a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z"/>
+    <path d="M35 12v8a3 3 0 0 0 3 3h8"/>
+    <path d="M25 32h14M25 39h14M25 46h8"/>
+  </g>
+</svg>

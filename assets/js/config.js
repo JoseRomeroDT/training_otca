@@ -1,0 +1,54 @@
+// Desarrollado por Jose Eduardo Romero Jimenez
+// https://github.com/Edunzz
+
+/**
+ * config.js — Configuración del sitio.
+ *
+ * Es el único archivo que una copia del repositorio puede necesitar tocar, y
+ * normalmente se deja tal cual: el propietario y el nombre del repositorio se
+ * detectan solos (ver github.js). Lo leen tanto el navegador como los scripts
+ * de Node (validación y manifiesto), así que debe seguir siendo un módulo sin
+ * dependencias ni acceso al DOM.
+ */
+
+/**
+ * Qué se publica.
+ *   "all"   → todo: procedimientos y guías de laboratorio (/documents/steps)
+ *             y pruebas de práctica (/documents/tests)
+ *   "steps" → solo procedimientos y guías de laboratorio
+ *   "tests" → solo pruebas de práctica
+ */
+export const DOCUMENTATION_MODE = "all";
+
+export const CONFIG = Object.freeze({
+  /** Nombre visible del sitio, por idioma. */
+  siteTitle: { es: "Entrenamiento OTCA", en: "OTCA Training" },
+  siteTagline: {
+    es: "Ruta de estudio para la certificación OpenTelemetry Certified Associate (OTCA): sílabo, material oficial, laboratorios en GitHub Codespaces y simulacros. Tu avance se guarda en este navegador.",
+    en: "Study path for the OpenTelemetry Certified Associate (OTCA) certification: syllabus, official material, GitHub Codespaces labs and practice exams. Your progress is saved in this browser.",
+  },
+
+  /**
+   * Override opcional del repositorio. Déjalo vacío para detectarlo desde la
+   * URL de GitHub Pages o desde el manifiesto generado en el despliegue.
+   * Útil con un dominio propio sin Actions: { owner: "mi-org", name: "mi-repo" }.
+   */
+  repository: Object.freeze({ owner: "", name: "", branch: "" }),
+
+  /** Idiomas de la interfaz. El primero es el de respaldo. */
+  languages: Object.freeze(["es", "en"]),
+
+  /** Archivo generado por scripts/build-manifest.mjs, relativo a index.html. */
+  manifestUrl: "documents.manifest.json",
+
+  /** Prefijo de todas las claves de localStorage/sessionStorage. */
+  storagePrefix: "docpages",
+
+  /** API pública de GitHub (sin token) para «Actualizar desde el repositorio». */
+  github: Object.freeze({
+    api: "https://api.github.com",
+    raw: "https://raw.githubusercontent.com",
+    maxDocuments: 100,
+    timeoutMs: 15000,
+  }),
+});
