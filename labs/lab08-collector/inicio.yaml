@@ -1,0 +1,22 @@
+# Lab 8 · Punto de partida: el Collector más pequeño que funciona.
+#   1 receiver (otlp) → 1 pipeline (traces) → 1 exporter (debug)
+# Cópialo a mi-collector.yaml y complétalo siguiendo la guía del Laboratorio 8.
+# Referencia: https://opentelemetry.io/docs/collector/configuration/
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+
+exporters:
+  debug:
+    verbosity: basic
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [debug]

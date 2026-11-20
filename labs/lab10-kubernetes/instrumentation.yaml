@@ -1,0 +1,18 @@
+# Lab 10 · Recurso Instrumentation: qué SDK inyectar y cómo configurarlo.
+# Debe existir ANTES de desplegar la app anotada.
+# Python usa OTLP sobre http/protobuf → por eso el puerto 4318 del Collector.
+# Fuente: https://opentelemetry.io/docs/platforms/kubernetes/operator/automatic/#python
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: demo-instrumentation
+  namespace: otca
+spec:
+  exporter:
+    endpoint: http://demo-collector:4318
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"

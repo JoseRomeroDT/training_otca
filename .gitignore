@@ -1,0 +1,14 @@
+# Sitio
+node_modules/
+.archify/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+
+# Laboratorios
+.venv/
+__pycache__/
+*.pyc
+labs/lab-env/active/
+labs/**/mi-*.yaml

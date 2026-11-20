@@ -1,0 +1,19 @@
+{
+  "name": "Entrenamiento OTCA",
+  "short_name": "OTCA",
+  "description": "Entrenamiento para la certificación OpenTelemetry Certified Associate (OTCA): sílabo, material de estudio, laboratorios y simulacros.",
+  "lang": "es",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#1f2a44",
+  "icons": [
+    {
+      "src": "assets/icons/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

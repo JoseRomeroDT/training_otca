@@ -1,0 +1,56 @@
+# Entorno de laboratorio del entrenamiento OTCA.
+#
+#   apps de los labs ──OTLP──▶ otel-collector ──▶ jaeger      (trazas)
+#   (localhost:4317/4318)                     ──▶ prometheus  (métricas)
+#                                             ──▶ debug       (logs en la consola del Collector)
+#
+# La configuración activa del Collector vive en ./active/ (no se versiona).
+# Usa ./up.sh para levantarlo y ./use-collector-config.sh para cambiarla.
+# El perfil "gateway" agrega un segundo Collector para el Lab 9 (agent + gateway).
+name: otca-lab
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.165.0
+    container_name: otel-collector
+    command: ["--config=/etc/otelcol-contrib/active/collector.yaml"]
+    volumes:
+      - ./active:/etc/otelcol-contrib/active:ro
+    ports:
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
+      - "8888:8888"     # métricas internas del Collector
+      - "13133:13133"   # extensión health_check
+      - "55679:55679"   # extensión zpages
+      - "1777:1777"     # extensión pprof
+    depends_on: [jaeger, prometheus]
+    restart: unless-stopped
+
+  otel-gateway:
+    profiles: ["gateway"]
+    image: otel/opentelemetry-collector-contrib:0.165.0
+    container_name: otel-gateway
+    command: ["--config=/etc/otelcol-contrib/active/gateway.yaml"]
+    volumes:
+      - ./active:/etc/otelcol-contrib/active:ro
+    ports:
+      - "55680:55679"   # zpages del gateway (en el host: 55680)
+    depends_on: [jaeger, prometheus]
+    restart: unless-stopped
+
+  jaeger:
+    image: jaegertracing/jaeger:2.23.0
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # Jaeger UI
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.16.0
+    container_name: prometheus
+    command: ["--config.file=/etc/prometheus/prometheus.yaml"]
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+    ports:
+      - "9090:9090"     # Prometheus UI
+    restart: unless-stopped
