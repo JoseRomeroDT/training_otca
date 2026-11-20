@@ -26,10 +26,18 @@ jaeger_has_service() {
   curl -fsS "http://localhost:16686/api/services" \
     | "$PY" -c "import sys, json; sys.exit(0 if sys.argv[1] in (json.load(sys.stdin)['data'] or []) else 1)" "$1"
 }
+# Se lee la salida completa antes de buscar: con pipefail, "cmd | grep -q" puede fallar
+# por SIGPIPE en cmd aunque el texto sí aparezca.
 jaeger_traces_contain() {
-  curl -fsS "http://localhost:16686/api/traces?service=$1&limit=50&lookback=1h" | grep -q "$2"
+  local out
+  out="$(curl -fsS "http://localhost:16686/api/traces?service=$1&limit=50&lookback=1h")" || return 1
+  grep -q -- "$2" <<<"$out"
 }
-collector_log_contains() { docker logs "$1" 2>&1 | grep -q "$2"; }
+collector_log_contains() {
+  local out
+  out="$(docker logs "$1" 2>&1)" || return 1
+  grep -q -- "$2" <<<"$out"
+}
 http_ok() { curl -fsS "$1"; }
 
 echo "== Lab 0 · entorno y prueba de humo"

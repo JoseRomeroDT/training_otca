@@ -20,7 +20,9 @@ kubectl apply -f $L/app.yaml
 kubectl rollout status deploy/dice-app -n otca --timeout=300s
 
 echo "== ¿Se inyectó la auto-instrumentación?"
-kubectl describe pod -n otca -l app=dice-app | tee /tmp/pod.txt | grep -q "opentelemetry-auto-instrumentation"
+# Salidas a archivo antes de buscar: con pipefail, "cmd | grep -q" puede fallar por SIGPIPE.
+kubectl describe pod -n otca -l app=dice-app > /tmp/pod.txt
+grep -q "opentelemetry-auto-instrumentation" /tmp/pod.txt
 echo "  OK     init container de auto-instrumentación presente"
 
 echo "== Tráfico"
@@ -32,20 +34,22 @@ for _ in $(seq 1 10); do curl -fsS "localhost:8080/rolldice?player=ci" >/dev/nul
 echo "== ¿Llegaron los spans al Collector?"
 ok=""
 for _ in $(seq 1 30); do
-  if kubectl logs -n otca deploy/demo-collector 2>/dev/null | grep -q "GET /rolldice"; then ok=1; break; fi
+  kubectl logs -n otca deploy/demo-collector > /tmp/collector.log 2>/dev/null || true
+  if grep -q "GET /rolldice" /tmp/collector.log; then ok=1; break; fi
   sleep 3
 done
 kill "$PF" 2>/dev/null || true
 if [ -z "$ok" ]; then
   echo "  FALLA  no hay spans GET /rolldice en el Collector"
-  kubectl logs -n otca deploy/demo-collector | tail -60
-  kubectl logs -n otca deploy/dice-app | tail -60
+  tail -60 /tmp/collector.log
+  kubectl logs -n otca deploy/dice-app --all-containers > /tmp/app.log 2>&1 || true
+  tail -60 /tmp/app.log
   cat /tmp/pod.txt
   exit 1
 fi
 echo "  OK     spans GET /rolldice en el Collector"
-kubectl logs -n otca deploy/demo-collector | grep -m1 "service.name" || true
-kubectl logs -n otca deploy/demo-collector | grep -q "service.name: Str(dice-app)"
+grep -m1 "service.name" /tmp/collector.log || true
+grep -q "service.name: Str(dice-app)" /tmp/collector.log
 echo "  OK     service.name derivado del Deployment (dice-app)"
 
 $L/cluster-down.sh
