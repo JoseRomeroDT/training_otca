@@ -32,11 +32,7 @@ links:
 
 El Codespace es una máquina Linux en la nube con VS Code en el navegador. Ya trae Python 3.12 con las librerías de OpenTelemetry, Docker, `kubectl`, Helm y `kind`. Todos los laboratorios se hacen ahí.
 
-```text
-apps de los labs ──OTLP──▶ otel-collector ──▶ Jaeger      (trazas)      :16686
-(localhost:4317/4318)                    ──▶ Prometheus  (métricas)    :9090
-                                         ──▶ debug       (logs, en la consola del Collector)
-```
+![Entorno de laboratorio: las apps envían OTLP al Collector, que reparte a Jaeger, Prometheus y la consola](../../img/entorno-laboratorio.drawio.png)
 
 :::step id="crear" title="Crear el Codespace"
 1. Pulsa **Abrir el Codespace** (arriba) o, en el repositorio, **Code → Codespaces → Create codespace on main**.

@@ -31,13 +31,7 @@ links:
 
 # {{ title }}
 
-```text
-apps ──OTLP──▶ otel-collector (AGENT)  ──otlp_grpc──▶ otel-gateway (GATEWAY) ──▶ Jaeger
-               memory_limiter                         memory_limiter            ──▶ Prometheus
-               resource/agent                         transform (OTTL)          ──▶ debug (logs)
-                                                      filter (logs < WARN)
-                                                      span_metrics (traces → metrics)
-```
+![Patrón agent → gateway: pipelines de trazas, métricas y logs del gateway con OTTL, filter y span_metrics](../../img/lab09-agent-gateway.drawio.png)
 
 :::step id="leer" title="Leer las dos configuraciones"
 Abre `labs/lab09-ottl-gateway/agent.yaml` y `gateway.yaml`.

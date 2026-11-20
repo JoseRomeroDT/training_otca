@@ -54,11 +54,7 @@ Fuentes: [Linux Foundation](https://training.linuxfoundation.org/certification/o
 
 ## Entorno de laboratorio
 
-```text
-apps de los labs ──OTLP──▶ otel-collector ──▶ Jaeger      (trazas)    :16686
-(localhost:4317/4318)                    ──▶ Prometheus  (métricas)  :9090
-                                         ──▶ debug       (logs)
-```
+![Entorno de laboratorio: apps → OTLP → Collector → Jaeger, Prometheus y consola](documents/img/entorno-laboratorio.drawio.png)
 
 El Codespace (`.devcontainer/`) trae Python 3.12 con un `.venv` listo, Docker, `kubectl`, Helm y `kind`. El entorno se levanta con `labs/lab-env/up.sh`. Versiones fijadas:
 
@@ -79,6 +75,7 @@ Más detalle en [`labs/README.md`](labs/README.md).
 documents/steps/estudio/   sílabo (ruta) y 12 sesiones de estudio   (*.procedure.steps.md)
 documents/steps/labs/      12 guías de laboratorio                   (*.labguide.steps.md)
 documents/tests/           quizzes por dominio y simulacro            (*.test.md)
+documents/img/             diagramas draw.io: .drawio (fuente) y .drawio.png (con el diagrama embebido)
 labs/                      código de los laboratorios y entorno (Collector, Jaeger, Prometheus, kind)
 .devcontainer/             definición del Codespace
 .github/workflows/         CI: valida documentos, configs del Collector y los labs de punta a punta
@@ -95,6 +92,7 @@ Es un sitio estático, sin compilación. Una sola vez, con permisos de administr
 - Reglas del curso: contenido en español con los términos técnicos en inglés (el examen es en inglés), **cada dato con su fuente oficial** y versiones fijadas.
 - Valida antes de subir (solo necesita Node 22+): `node scripts/validate-documents.mjs` y `node scripts/check-links.mjs`, o usa la pestaña **Validar** del sitio.
 - Si cambias un documento de forma significativa, sube su `version` (el progreso guardado es por versión).
+- Los diagramas se editan con [draw.io](https://www.drawio.com/): abre `documents/img/<nombre>.drawio` (o directamente el `.drawio.png`, que trae el diagrama embebido), edítalo y vuelve a exportar el PNG con *Embed diagram* activado.
 - El CI (`.github/workflows/validar.yml`) además valida las configuraciones del Collector con `otelcol-contrib validate` y ejecuta los laboratorios de punta a punta. Los mismos scripts sirven en un Codespace: `bash .github/scripts/e2e-labs.sh`.
 
 ## Créditos
