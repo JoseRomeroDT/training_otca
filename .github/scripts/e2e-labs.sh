@@ -14,23 +14,32 @@ wait_for() {
   done
   echo "  FALLA  $desc"
   docker ps -a --format 'table {{.Names}}\t{{.Status}}' || true
-  docker logs otel-collector 2>&1 | tail -60 || true
-  docker logs otel-gateway 2>&1 | tail -40 || true
+  echo "--- Jaeger /api/v3/services:"; curl -sS "http://localhost:16686/api/v3/services" || true; echo
+  echo "--- jaeger (últimas líneas):"; docker logs jaeger 2>&1 | tail -20 || true
+  echo "--- otel-collector (últimas líneas):"; docker logs otel-collector 2>&1 | tail -60 || true
+  if docker ps --format '{{.Names}}' | grep -qx otel-gateway; then
+    echo "--- otel-gateway (últimas líneas):"; docker logs otel-gateway 2>&1 | tail -40 || true
+  fi
   return 1
 }
 prom_has() {
   curl -fsS --get "http://localhost:9090/api/v1/query" --data-urlencode "query=$1" \
     | "$PY" -c "import sys, json; sys.exit(0 if json.load(sys.stdin)['data']['result'] else 1)"
 }
+# Jaeger v2 expone la búsqueda en la API v3 (/api/v3/services y /api/v3/traces).
 jaeger_has_service() {
-  curl -fsS "http://localhost:16686/api/services" \
-    | "$PY" -c "import sys, json; sys.exit(0 if sys.argv[1] in (json.load(sys.stdin)['data'] or []) else 1)" "$1"
+  curl -fsS "http://localhost:16686/api/v3/services" \
+    | "$PY" -c "import sys, json; sys.exit(0 if sys.argv[1] in (json.load(sys.stdin).get('services') or []) else 1)" "$1"
 }
 # Se lee la salida completa antes de buscar: con pipefail, "cmd | grep -q" puede fallar
 # por SIGPIPE en cmd aunque el texto sí aparezca.
 jaeger_traces_contain() {
   local out
-  out="$(curl -fsS "http://localhost:16686/api/traces?service=$1&limit=50&lookback=1h")" || return 1
+  out="$(curl -fsS --get "http://localhost:16686/api/v3/traces" \
+    --data-urlencode "query.serviceName=$1" \
+    --data-urlencode "query.startTimeMin=$(date -u -d '-1 hour' +%Y-%m-%dT%H:%M:%SZ)" \
+    --data-urlencode "query.startTimeMax=$(date -u -d '+5 minutes' +%Y-%m-%dT%H:%M:%SZ)" \
+    --data-urlencode "query.searchDepth=50")" || return 1
   grep -q -- "$2" <<<"$out"
 }
 collector_log_contains() {

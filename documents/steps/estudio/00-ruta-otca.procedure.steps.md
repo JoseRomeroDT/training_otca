@@ -52,7 +52,7 @@ Esta es la ruta completa del entrenamiento. Cada sesión tiene tres piezas: **ma
 | Prerrequisitos | Ninguno |
 | Idioma de las preguntas | Inglés (los términos técnicos del curso se dejan en inglés por eso) |
 
-Fuentes: [página del examen en Linux Foundation](https://training.linuxfoundation.org/certification/opentelemetry-certified-associate-otca/), [página de CNCF](https://www.cncf.io/training/certification/otca/), [FAQ de exámenes de opción múltiple](https://docs.linuxfoundation.org/tc-docs/certification/faq-mc) (75 % y 90 min) e [instrucciones de exámenes de opción múltiple](https://docs.linuxfoundation.org/tc-docs/certification/important-instructions-mc) (60 preguntas).
+Fuentes: [página del examen en Linux Foundation](https://training.linuxfoundation.org/certification/opentelemetry-certified-associate-otca/), [página de CNCF](https://www.cncf.io/training/certification/otca/), [FAQ de exámenes de opción múltiple](https://docs.linuxfoundation.org/tc-docs/certification/faq-mc) (75 % y 90 min) [instrucciones de exámenes de opción múltiple](https://docs.linuxfoundation.org/tc-docs/certification/important-instructions-mc) (60 preguntas) y [idiomas disponibles por examen](https://docs.linuxfoundation.org/tc-docs/certification/lf-handbook2/language) (OTCA: solo inglés).
 
 **Dominios y peso** (iguales en la página de Linux Foundation, la de CNCF y el [PDF del currículo](https://github.com/cncf/curriculum/blob/main/OTCA_Curriculum.pdf)):
 
