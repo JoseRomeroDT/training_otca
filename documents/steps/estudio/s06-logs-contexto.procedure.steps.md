@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-2, logs, contexto, propagacion, baggage]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Usar el logs bridge del SDK con la librería de logging del lenguaje."

@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-2, trazas, spans, sampling]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Configurar un TracerProvider con span processors y exporters."

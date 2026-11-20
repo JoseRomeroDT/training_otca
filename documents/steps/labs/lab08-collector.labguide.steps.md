@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, collector, pipelines, yaml]
-duration: "60 minutos"
 level: "intermediate"
 objectives:
   - "Escribir una configuración del Collector y validarla con otelcol-contrib validate."

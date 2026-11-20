@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, kubernetes, operator, kind, auto-instrumentacion]
-duration: "60 minutos"
 level: "advanced"
 objectives:
   - "Instalar el OpenTelemetry Operator (con cert-manager) en un clúster kind."
@@ -32,6 +31,8 @@ links:
 # {{ title }}
 
 Versiones fijadas: kind **v0.33.0**, cert-manager **v1.21.3** y OpenTelemetry Operator **v0.163.0**. La app de `labs/lab10-kubernetes/app/` **no tiene código de OpenTelemetry**.
+
+![Clúster kind con cert-manager, el Operator, el Collector gestionado y el pod auto-instrumentado](../../img/lab10-kubernetes.drawio.png)
 
 :::step id="cluster" title="Crear el clúster e instalar el Operator"
 Libera recursos apagando el entorno del curso y crea el clúster:

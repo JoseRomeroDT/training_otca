@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-1, observabilidad, senales, fundamentos]
-duration: "2,5 horas"
 level: "beginner"
 objectives:
   - "Explicar qué es la observabilidad según la documentación oficial y en qué se diferencia de solo vigilar indicadores conocidos."

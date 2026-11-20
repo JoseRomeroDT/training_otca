@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-2, configuracion, otlp, agentes, zero-code]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Configurar el SDK de forma programática y por variables de entorno OTEL_*."

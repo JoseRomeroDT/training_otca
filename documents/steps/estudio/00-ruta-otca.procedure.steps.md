@@ -1,12 +1,11 @@
 ---
 title: "Ruta OTCA: sílabo y avance del curso"
-description: "Las 12 sesiones (25 h) del entrenamiento para la certificación OpenTelemetry Certified Associate, alineadas con los 4 dominios oficiales del examen. Marca cada sesión, laboratorio y quiz para ver tu avance."
+description: "Las 12 sesiones del entrenamiento para la certificación OpenTelemetry Certified Associate, alineadas con los 4 dominios oficiales del examen. Marca cada sesión, laboratorio y quiz para ver tu avance."
 slug: "ruta-otca"
 type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [otca, silabo, ruta, opentelemetry, certificacion]
-duration: "25 horas académicas"
 level: "beginner"
 objectives:
   - "Conocer el formato oficial del examen OTCA y el peso de cada dominio."
@@ -37,7 +36,7 @@ links:
 Esta es la ruta completa del entrenamiento. Cada sesión tiene tres piezas: **material de estudio** (con lecturas de la documentación oficial), un **laboratorio** práctico en GitHub Codespaces y, por dominio, un **quiz** tipo examen. Marca cada casilla al terminarla: el avance se guarda **en este navegador** (si cambias de equipo o de navegador, empiezas de cero).
 
 > [!TIP]
-> Empieza por el [Laboratorio 0](../labs/lab00-codespaces.labguide.steps.md): deja listo tu Codespace en 10 minutos y lo reutilizas en todo el curso.
+> Empieza por el [Laboratorio 0](../labs/lab00-codespaces.labguide.steps.md): deja listo tu Codespace y lo reutilizas en todo el curso.
 
 :::step id="examen" title="El examen OTCA en datos oficiales"
 | Dato | Valor oficial |
@@ -70,20 +69,20 @@ Fuentes: [página del examen en Linux Foundation](https://training.linuxfoundati
 :::
 
 :::step id="plan" title="Plan de las 12 sesiones"
-| Sesión | Horas | Dominio | Tema | Laboratorio |
-|---|---|---|---|---|
-| 1 | 2,5 | 1 | Introducción a la observabilidad | Astronomy Shop (demo oficial) |
-| 2 | 2,5 | 1 | Instrumentación y convenciones semánticas | Zero-code en Python |
-| 3 | 2 | 2 | API vs SDK y modelo de datos | Primer span y primera métrica con el SDK |
-| 4 | 2 | 2 | Trazas: spans, processors y sampling | Trazado distribuido de 2 servicios |
-| 5 | 2 | 2 | Métricas: instrumentos y agregación | Métricas de negocio por OTLP |
-| 6 | 2 | 2 | Logs, contexto y propagación | Logs correlacionados y propagación W3C |
-| 7 | 2 | 2 | Configuración, OTLP y agentes zero-code | Configuración solo con variables `OTEL_*` |
-| 8 | 2 | 3 | Collector: componentes y pipelines | Tu propio Collector con las 3 señales |
-| 9 | 2 | 3 | Connectors, OTTL y despliegue | OTTL + patrón agent → gateway |
-| 10 | 2 | 3 | Operator, Kubernetes y escalamiento | Operator en kind + auto-instrumentación |
-| 11 | 2 | 4 | Mantenimiento y depuración de pipelines | Depurar pipelines rotos |
-| 12 | 2 | Todos | Repaso integral y simulacro | Simulacros tipo examen |
+| Sesión | Dominio | Tema | Laboratorio |
+|---|---|---|---|
+| 1 | 1 | Introducción a la observabilidad | Astronomy Shop (demo oficial) |
+| 2 | 1 | Instrumentación y convenciones semánticas | Zero-code en Python |
+| 3 | 2 | API vs SDK y modelo de datos | Primer span y primera métrica con el SDK |
+| 4 | 2 | Trazas: spans, processors y sampling | Trazado distribuido de 2 servicios |
+| 5 | 2 | Métricas: instrumentos y agregación | Métricas de negocio por OTLP |
+| 6 | 2 | Logs, contexto y propagación | Logs correlacionados y propagación W3C |
+| 7 | 2 | Configuración, OTLP y agentes zero-code | Configuración solo con variables `OTEL_*` |
+| 8 | 3 | Collector: componentes y pipelines | Tu propio Collector con las 3 señales |
+| 9 | 3 | Connectors, OTTL y despliegue | OTTL + patrón agent → gateway |
+| 10 | 3 | Operator, Kubernetes y escalamiento | Operator en kind + auto-instrumentación |
+| 11 | 4 | Mantenimiento y depuración de pipelines | Depurar pipelines rotos |
+| 12 | Todos | Repaso integral y simulacro | Simulacros tipo examen |
 
 Todos los laboratorios usan **Python** y una misma app de dados (`dice-server`) que evoluciona sesión a sesión; en las sesiones de Collector y Kubernetes la configuración es YAML.
 

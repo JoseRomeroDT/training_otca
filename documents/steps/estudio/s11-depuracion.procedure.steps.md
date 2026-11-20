@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-4, depuracion, troubleshooting, schemas, resiliencia]
-duration: "2 horas"
 level: "advanced"
 objectives:
   - "Diagnosticar fallas de propagación de contexto."

@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, trazas, sampling, jaeger]
-duration: "50 minutos"
 level: "intermediate"
 objectives:
   - "Configurar TracerProvider con BatchSpanProcessor y OTLPSpanExporter."
@@ -31,13 +30,7 @@ links:
 
 # {{ title }}
 
-```text
-dice-player                              dice-server
-jugar-partida (INTERNAL)
-└─ GET (CLIENT) ──traceparent──▶ GET /rolldice (SERVER)
-                                  ├─ validar-jugador
-                                  └─ roll × N   (eventos "lanzando el dado", "¡seis!")
-```
+![Traza distribuida entre dice-player y dice-server, exportada al Collector y a Jaeger](../../img/lab04-traza-distribuida.drawio.png)
 
 `RequestsInstrumentor` **inyecta** el contexto en el header `traceparent` y `FlaskInstrumentor` lo **extrae**: por eso ambos servicios comparten la traza.
 

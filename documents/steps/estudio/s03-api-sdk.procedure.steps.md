@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [dominio-2, api, sdk, data-model]
-duration: "2 horas"
 level: "intermediate"
 objectives:
   - "Explicar la separación API/SDK y por qué la API es no-op sin SDK."
@@ -80,11 +79,7 @@ Fuente: [Python · Instrumentation](https://opentelemetry.io/docs/languages/pyth
 :::step id="datamodel" title="El modelo de datos"
 Toda la telemetría se agrupa así (es la estructura que transporta OTLP):
 
-```text
-Resource            → QUIÉN produce la telemetría (service.name, host, k8s.pod.name…)
-└─ Instrumentation Scope → QUÉ librería o módulo la produjo (name, version, schema_url, attributes)
-   └─ spans | puntos de métricas | log records
-```
+![Modelo de datos: Resource → Instrumentation Scope → spans, puntos de métricas y log records](../../img/s03-modelo-datos.drawio.png)
 
 - **Resource**: la entidad que produce la telemetría. Se asocia al provider al crearlo y **no se puede cambiar después** ([Resources](https://opentelemetry.io/docs/concepts/resources/)).
 - **Instrumentation Scope**: unidad lógica de software asociada a la telemetría, identificada por `(name, version, schema_url, attributes)` ([Instrumentation scope](https://opentelemetry.io/docs/concepts/instrumentation-scope/)).

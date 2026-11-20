@@ -6,7 +6,6 @@ type: "test"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [quiz, dominio-3, otca, collector]
-duration: "20 minutos"
 level: "intermediate"
 passingScore: 75
 feedback: "immediate"

@@ -6,7 +6,6 @@ type: "steps"
 version: "1.0.0"
 updated: "2026-11-20"
 tags: [lab, logs, contexto, propagacion, baggage]
-duration: "50 minutos"
 level: "intermediate"
 objectives:
   - "Enviar logs del módulo logging de Python por OTLP con el logs bridge."
@@ -31,11 +30,7 @@ links:
 
 # {{ title }}
 
-```text
-curl ──▶ dice-frontend :8081 ──(traceparent + baggage)──▶ dice-backend :8082
-          span GET /jugar                                 span GET /rolldice
-          log "frontend llama…"                           log "backend: ana sacó N"
-```
+![Propagación manual: inject en el frontend, headers traceparent y baggage, extract en el backend](../../img/lab06-propagacion.drawio.png)
 
 Aquí **no** hay librerías de instrumentación: la propagación es manual con `propagate.inject` y `propagate.extract`. Necesitas tres terminales.
 
