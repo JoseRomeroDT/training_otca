@@ -45,6 +45,9 @@ kubectl get pods -A
 El script crea el clúster kind `otca`, instala **cert-manager** (el webhook del Operator necesita certificados), instala el **Operator** con su manifiesto oficial y crea el namespace `otca`.
 
 - [ ] Los pods de `cert-manager` y `opentelemetry-operator-system` están `Running`.
+
+> [!NOTE]
+> Si más adelante un `kubectl apply` responde `failed calling webhook … connection refused`, el webhook del Operator todavía no está listo: espera unos segundos y repite. El script ya espera a que responda antes de terminar.
 :::
 
 :::step id="collector" title="Un Collector gestionado por el Operator"

@@ -35,8 +35,20 @@ for intento in 1 2 3 4 5 6; do
 done
 kubectl wait --for=condition=Available deployment --all -n opentelemetry-operator-system --timeout=300s
 
-echo "==> 4/4 Namespace del laboratorio: otca"
+echo "==> 4/4 Namespace del laboratorio (otca) y webhook del Operator"
 kubectl create namespace otca --dry-run=client -o yaml | kubectl apply -f -
+# El Deployment puede figurar "Available" antes de que su webhook acepte conexiones.
+# Se espera a que responda probando (sin crear nada) el Collector del laboratorio.
+listo=""
+for _ in $(seq 1 40); do
+  if kubectl apply --dry-run=server -f "$(dirname "$0")/collector.yaml" >/dev/null 2>&1; then listo=1; break; fi
+  sleep 5
+done
+if [ -z "$listo" ]; then
+  echo "El webhook del Operator no respondió a tiempo. Revisa: kubectl get pods -n opentelemetry-operator-system" >&2
+  exit 1
+fi
+echo "    webhook del Operator listo"
 
 echo ""
 echo "Listo. Pods del Operator:"
